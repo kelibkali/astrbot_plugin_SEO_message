@@ -20,5 +20,22 @@ class MyPlugin(Star):
         logger.info(message_chain)
         yield event.plain_result(f"Hello, {user_name}, 你发了 {message_str}!") # 发送一条纯文本消息
 
-    async def terminate(self):
-        """可选择实现异步的插件销毁方法，当插件被卸载/停用时会调用。"""
+    @filter.command("重发")
+    async def send_email(self, event: AstrMessageEvent):
+        import smtplib
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
+
+        msg = MIMEMultipart()
+        msg['From'] = "c1131683978@163.com"
+        msg['To'] = "c1131683978@163.com"
+        msg['Subject'] = "重复SEO关键词获取"
+
+        msg.attach(MIMEText("ok",'plain'))
+        server = smtplib.SMTP_SSL("smtp.163.com", 465)
+        server.starttls()
+        server.login("c1131683978@163.com", "PRfsWFdRz9UfWpej")
+        text = msg.as_string()
+        server.sendmail(msg['From'], msg['To'], text)
+        server.quit()
+        yield event.plain_result("正在重新获取关键词...")
