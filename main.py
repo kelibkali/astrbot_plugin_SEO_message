@@ -33,7 +33,6 @@ class MyPlugin(Star):
 
         msg.attach(MIMEText("ok",'plain'))
         server = smtplib.SMTP_SSL("smtp.163.com", 465)
-        server.starttls()
         server.login("c1131683978@163.com", "PRfsWFdRz9UfWpej")
         text = msg.as_string()
         server.sendmail(msg['From'], msg['To'], text)
