@@ -38,3 +38,22 @@ class MyPlugin(Star):
         server.sendmail(msg['From'], msg['To'], text)
         server.quit()
         yield event.plain_result("正在重新获取关键词...")
+
+    @filter.command("复查")
+    async def research(self, event: AstrMessageEvent):
+        import smtplib
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
+
+        msg = MIMEMultipart()
+        msg['From'] = "c1131683978@163.com"
+        msg['To'] = "c1131683978@163.com"
+        msg['Subject'] = "SEO关键词复查"
+
+        msg.attach(MIMEText("ok",'plain'))
+        server = smtplib.SMTP_SSL("smtp.163.com", 465)
+        server.login("c1131683978@163.com", "PRfsWFdRz9UfWpej")
+        text = msg.as_string()
+        server.sendmail(msg['From'], msg['To'], text)
+        server.quit()
+        yield event.plain_result("正在开始复查...")
